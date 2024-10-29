@@ -2,14 +2,14 @@
 <html>
     <head>
         <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-        <script src="hls.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
         <script>
             AFRAME.registerComponent('hls_stream', {
                 init: function(){
                     var video = document.getElementById('webcam_stream');
                     if(Hls.isSupported()) {
                     var hls = new Hls();
-                    hls.loadSource('https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8');
+                    hls.loadSource('https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8');
                     hls.attachMedia(video);
                     hls.on(Hls.Events.MANIFEST_PARSED,function() {
                         video.play();
@@ -17,7 +17,7 @@
                     console.log("supported");
                 }
                 else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8';
+                    video.src = 'https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8';
                     video.addEventListener('loadedmetadata',function() {
                         video.play();
                     });
