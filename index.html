@@ -3,40 +3,33 @@
     <head>
         <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-        <script>
-            AFRAME.registerComponent('hls_stream', {
-                init: function(){
-                    var video = document.getElementById('webcam_stream');
-                    if(Hls.isSupported()) {
-                    var hls = new Hls();
-                    hls.loadSource('https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8');
-                    hls.attachMedia(video);
-                    hls.on(Hls.Events.MANIFEST_PARSED,function() {
-                        video.play();
-                    });
-                    console.log("supported");
-                }
-                else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = 'https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8';
-                    video.addEventListener('loadedmetadata',function() {
-                        video.play();
-                    });
-                    }
-                }
-            })
-          </script>
-    </head>
-    <body>
-        <a-scene cursor="rayOrigin:mouse">
+        <a-scene>
+            <!-- Load HLS Video as an Asset -->
             <a-assets>
-                <video id="webcam_stream" crossorigin="anonymous"></video>
+                <video id="livestream" autoplay loop="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
             </a-assets>
-
-            <a-video src="#webcam_stream" width="16" height="9" position="0 4.5 -20" hls_stream></a-video>
-
-
-            <a-entity id="camera"  wasd-controls camera look-controls></a-entity>
-            <a-sky color="#111"></a-sky>
+    
+            <!-- Use Video Texture on a Plane (or Sky for Full 360 Experience) -->
+            <a-video src="#livestream" width="16" height="9" position="0 2 -5"></a-video>
         </a-scene>
+    
+        <script>
+            // HLS.js Initialization
+            if (Hls.isSupported()) {
+                const video = document.getElementById('livestream');
+                const hls = new Hls();
+                hls.loadSource('https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8'); // Replace with your HLS stream URL
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                // Fallback for Safari and iOS
+                video.src = 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8';
+                video.addEventListener('loadedmetadata', function() {
+                    video.play();
+                });
+            }
+        </script>
     </body>
 </html>
