@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <body>
         <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
         <a-scene>
@@ -18,14 +18,14 @@
             if (Hls.isSupported()) {
                 const video = document.getElementById('livestream');
                 const hls = new Hls();
-                hls.loadSource('https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8'); // Replace with your HLS stream URL
+                hls.loadSource('https://stream.mux.com/dNlE418ejuV01k00qm023VqWu6zBB2TqfT9K7puLED69sI.m3u8'); // Replace with your HLS stream URL
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function() {
                     video.play();
                 });
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 // Fallback for Safari and iOS
-                video.src = 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8';
+                video.src = 'https://stream.mux.com/dNlE418ejuV01k00qm023VqWu6zBB2TqfT9K7puLED69sI.m3u8';
                 video.addEventListener('loadedmetadata', function() {
                     video.play();
                 });
